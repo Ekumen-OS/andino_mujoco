@@ -1,0 +1,53 @@
+---
+x-common-config: &common-config
+  environment:
+    - DISPLAY
+    - QT_X11_NO_MITSHM=1
+    - XAUTHORITY=/tmp/.docker.xauth
+  tty: true
+  network_mode: host
+  stop_grace_period: 5s
+  volumes:
+    - /tmp/.X11-unix:/tmp/.X11-unix
+    - $HOME/.Xauthority:/root/.Xauthority
+    - /dev/shm:/dev/shm
+  devices:
+    - /dev/dri:/dev/dri
+  deploy:
+    resources:
+      reservations:
+        devices:
+          - driver: nvidia
+            count: 1
+            capabilities:
+              - gpu
+
+services:
+  mujoco_python:
+    build:
+      dockerfile: ./docker/Dockerfile
+      context: ../
+      target: mujoco_python
+      args:
+        MUJOCO_VERSION: 3.2.6
+    image: mujoco_python
+    container_name: mujoco_python
+    volumes:
+      - ../andino_mujoco/andino_mujoco_description:/models:rw
+    <<: *common-config
+
+  andino_mujoco_teleoperation:
+    build:
+      dockerfile: ./docker/Dockerfile
+      context: ../
+      target: environment
+      args:
+        PYTHON_REQUIREMENTS_PATH: andino_mujoco/samples/teleoperation
+    image: andino_mujoco_teleoperation
+    container_name: andino_mujoco_teleoperation
+    volumes:
+      - ../andino_mujoco/andino_mujoco_description:/models/andino_mujoco_description:rw
+      - ../andino_mujoco/samples/teleoperation:/home:rw
+    entrypoint: ["python3",
+                 "andino_mujoco_teleoperation.py"]
+    <<: *common-config
