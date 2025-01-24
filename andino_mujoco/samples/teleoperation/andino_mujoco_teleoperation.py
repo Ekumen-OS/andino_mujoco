@@ -30,7 +30,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 """
-Run a Mujoco simulation of and Andino in the office environment.
+Run a MuJoCo simulation of and Andino in the office environment.
 
 The Andino can be controlled using the keyboard in a teleop_twist_keyboard
 fashion.
@@ -207,7 +207,7 @@ Press "p" to quit
 
     # Hack to display warnings correctly during simulation:
     # As the input handler puts the terminal in raw mode, the warnings
-    # printed when initializing Mujoco's passive viewer are poorly formatted.
+    # printed when initializing MuJoCo's passive viewer are poorly formatted.
     # These warnings can't be suppressed by redirecting stdout or stderr,
     # and are beyond our control, so we have to live with them.
     import time
