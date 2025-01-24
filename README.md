@@ -20,6 +20,10 @@ This repository provides a base Docker image called `mujoco_python` that include
 docker compose -f ./docker/docker-compose.yml run --rm mujoco_python
 ```
 
+> [!NOTE]
+> When running the MuJoCo visualizer from Docker, you may encounter the error: `X11: Failed to open display :0`. This indicates that you need to add your host to the `xhost` list.
+> You can do this by running the following command: `xhost +si:localuser:root`.
+
 ### Samples
 
 Samples can be run using the following command (see [`docker/docker-compose.yml`](docker/docker-compose.yml) for the service definition of the samples):
