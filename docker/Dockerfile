@@ -7,7 +7,7 @@ apt-get install -y python3.10 python3-pip libosmesa6-dev libgl1-mesa-glx libglfw
 rm -rf /var/lib/apt/lists/*
 
 
-FROM base as mujoco_python
+FROM base AS mujoco_python
 
 RUN mkdir /models
 
