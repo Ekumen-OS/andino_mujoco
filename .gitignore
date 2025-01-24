@@ -1,0 +1,9 @@
+# Python related
+__pycache__/
+**/venv/
+
+# Development environments
+.vscode/
+
+# MuJoCo auto-generated logs
+MUJOCO_LOG.TXT
