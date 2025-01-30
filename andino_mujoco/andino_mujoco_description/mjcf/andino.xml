@@ -33,6 +33,9 @@
                     <geom quat="1 1 0 0" type="cylinder" mass="0.03" size="0.03 0.010" />
                 </default>
             </default>
+            <default class="wheel">
+                <joint type="hinge" axis="0 1 0" damping="0.001"/>
+            </default>
         </default>
     </default>
 
@@ -48,13 +51,13 @@
             </body><!-- chassis_top -->
 
             <body name="right_wheel" pos="0.0185 -0.0675 -0.017">
-                <joint name="right_wheel_joint" type="hinge" axis="0 1 0" damping="0.001"/>
+                <joint name="right_wheel_joint" class="wheel"/>
                 <geom mesh="wheel" quat="0 0 -0.707107 -0.707107" class="rubber_wheel_visual"/>
                 <geom class="rubber_wheel_collision"/>
             </body><!-- right_wheel -->
 
             <body name="left_wheel" pos="0.0185 0.0675 -0.017">
-                <joint name="left_wheel_joint" type="hinge" axis="0 1 0" damping="0.001" />
+                <joint name="left_wheel_joint" class="wheel"/>
                 <geom mesh="wheel" quat="0.707107 0.707107 0 0" class="rubber_wheel_visual"/>
                 <geom class="rubber_wheel_collision"/>
             </body><!-- left_wheel -->
@@ -69,7 +72,7 @@
                     <geom mesh="caster_wheel_support" material="Aluminum" class="collision"/>
 
                     <body name="caster_wheel" pos="-0.015 0.0 -0.02">
-                        <joint name="caster_wheel_support_to_caster_wheel" pos="0 0 0" type="hinge" axis="0 1 0" damping="0.001" />
+                        <joint name="caster_wheel_support_to_caster_wheel" class="wheel"/>
                         <geom mesh="caster_wheel" material="Pure_Black" class="collision"/>
                     </body> <!-- caster_wheel -->
 
