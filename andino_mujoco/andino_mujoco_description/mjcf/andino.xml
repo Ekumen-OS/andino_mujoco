@@ -7,6 +7,7 @@
         <material name="Plastic_Grey" rgba="0.3 0.3 0.3 1"/>
         <material name="Pure_Black" rgba="0 0 0 1"/>
         <material name="Light_Blue" rgba="0 0.5 0.8 1"/>
+        <material name="Translucent" rgba="0 0 0 0"/>
 
         <mesh name="chassis" file="andino/chassis.stl"/>
         <mesh name="chassis_top" file="andino/chassis_top.stl"/>
@@ -30,7 +31,10 @@
             <default class="collision">
                 <geom group="2" type="mesh"/>
                 <default class="rubber_wheel_collision">
-                    <geom quat="1 1 0 0" type="cylinder" mass="0.03" size="0.03 0.010" />
+                    <geom quat="1 1 0 0" type="cylinder" mass="0.03" size="0.035 0.010" material="Translucent"/>
+                </default>
+                <default class="caster_wheel_collision">
+                    <geom quat="1 1 0 0" type="cylinder" mass="0.03" size="0.015 0.005" material="Translucent"/>
                 </default>
             </default>
             <default class="wheel">
@@ -46,7 +50,7 @@
         <body name="chassis" quat="0.707 0 0 -0.707">
             <joint type="free"/>
             <inertial pos="0 0 -0.02" mass="0.5" diaginertia="0.0009 0.0009 0.0016"/>
-            <geom mesh="chassis" material="3D_Print_Blue" class="collision" />
+            <geom mesh="chassis" material="3D_Print_Blue" class="collision"/>
 
             <body name="chassis_top" pos="0 0 0.05">
                 <inertial pos="-0.02 0 0" mass="3" diaginertia="0.0018 0.0018 0.0033"/>
@@ -76,7 +80,8 @@
 
                     <body name="caster_wheel" pos="-0.015 0.0 -0.02">
                         <joint name="caster_wheel_support_to_caster_wheel" class="wheel"/>
-                        <geom mesh="caster_wheel" material="Pure_Black" class="collision"/>
+                        <geom mesh="caster_wheel" material="Pure_Black" class="visual"/>
+                        <geom class="caster_wheel_collision"/>
                     </body> <!-- caster_wheel -->
 
                 </body> <!-- caster_wheel_support -->
