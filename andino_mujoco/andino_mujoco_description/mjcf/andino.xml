@@ -1,13 +1,13 @@
 <mujoco model="andino">
     <compiler angle="radian" meshdir="../meshes" balanceinertia="true"/>
 
-    <default>
-        <default class="visual">
-            <geom type="mesh" contype="0" conaffinity="0" group="2" rgba="0.3 0.3 0.3 1"/>
-        </default>
-    </default>
-
     <asset>
+        <material name="3D_Print_Blue" rgba="0 0 1 1"/>
+        <material name="Aluminum" rgba="0.79 0.82 0.93 1"/>
+        <material name="Plastic_Grey" rgba="0.3 0.3 0.3 1"/>
+        <material name="Pure_Black" rgba="0 0 0 1"/>
+        <material name="Light_Blue" rgba="0 0.5 0.8 1"/>
+
         <mesh name="chassis" file="andino/chassis.stl"/>
         <mesh name="chassis_top" file="andino/chassis_top.stl"/>
         <mesh name="caster_base" file="andino/caster_base.stl"/>
@@ -19,42 +19,57 @@
         <mesh name="camera_mount" file="sensors/camera_mount.stl"/>
     </asset>
 
+    <default>
+        <default class="andino">
+            <default class="visual">
+                <geom type="mesh" contype="0" conaffinity="0" group="1"/>
+                <default class="rubber_wheel_visual">
+                    <geom material="Plastic_Grey"/>
+                </default>
+            </default>
+            <default class="collision">
+                <geom group="2" type="mesh"/>
+                <default class="rubber_wheel_collision">
+                    <geom quat="1 1 0 0" type="cylinder" mass="0.03" size="0.03 0.010" />
+                </default>
+            </default>
+        </default>
+    </default>
+
     <worldbody>
         <body name="chassis" pos="0.0 0.0 0.0" quat="0.707 0 0 -0.707">
-            <site name="chassis"/>
             <joint type="free"/>
             <inertial pos="0 0 -0.02" mass="0.5" diaginertia="0.0009 0.0009 0.0016"/>
-            <geom type="mesh" rgba="0 0 1 1" mesh="chassis"/>
+            <geom mesh="chassis" material="3D_Print_Blue" class="collision" />
 
             <body name="chassis_top" pos="0 0 0.05">
                 <inertial pos="-0.02 0 0" mass="3" diaginertia="0.0018 0.0018 0.0033"/>
-                <geom type="mesh" rgba="0 0 1 1" mesh="chassis_top"/>
+                <geom mesh="chassis_top" material="3D_Print_Blue" class="collision"/>
             </body><!-- chassis_top -->
 
             <body name="right_wheel" pos="0.0185 -0.0675 -0.017">
-                <site name="right_wheel"/>
-                <joint name="right_wheel_joint" type="hinge" axis="0 1 0" damping="0.001"  />
-                <geom class="visual" quat="0 0 -0.707107 -0.707107" type="mesh"  mesh="wheel"/>
-                <geom quat="1 1 0 0" type="cylinder" mass="0.03" size="0.03 0.010" />
+                <joint name="right_wheel_joint" type="hinge" axis="0 1 0" damping="0.001"/>
+                <geom mesh="wheel" quat="0 0 -0.707107 -0.707107" class="rubber_wheel_visual"/>
+                <geom class="rubber_wheel_collision"/>
             </body><!-- right_wheel -->
 
             <body name="left_wheel" pos="0.0185 0.0675 -0.017">
                 <joint name="left_wheel_joint" type="hinge" axis="0 1 0" damping="0.001" />
-                <geom class="visual" quat="0.707107 0.707107 0 0" type="mesh" mesh="wheel"/>
-                <geom quat="1 1 0 0" type="cylinder" mass="0.03" size="0.03 0.010" />
+                <geom mesh="wheel" quat="0.707107 0.707107 0 0" class="rubber_wheel_visual"/>
+                <geom class="rubber_wheel_collision"/>
             </body><!-- left_wheel -->
 
             <body name="caster_base" pos="-0.076 0 -0.0155" >
                 <inertial pos="0 0 0" euler="0 0 0" mass="0.02" diaginertia="5.33e-06 5.33e-06 5.33e-06"/>
-                <geom type="mesh" contype="1" conaffinity="1" group="1"  rgba="0.79 0.82 0.93 1" mesh="caster_base"/>
+                <geom mesh="caster_base" material="Aluminum" class="collision"/>
 
                 <body name="caster_wheel_support" pos="-0.001 0 0" >
                     <inertial pos="0 0 0" mass="0.1" diaginertia="5.33e-06 5.33e-06 5.33e-06"/>
-                    <geom type="mesh" contype="1" conaffinity="1" group="1" rgba="0.79 0.82 0.93 1" mesh="caster_wheel_support"/>
+                    <geom mesh="caster_wheel_support" material="Aluminum" class="collision"/>
 
                     <body name="caster_wheel" pos="-0.023 0 -0.02" >
                         <joint name="caster_wheel_support_to_caster_wheel" pos="0 0 0" type="hinge" axis="0 1 0" damping="0.001" />
-                        <geom type="mesh" rgba="0 0 0 1" mesh="caster_wheel"/>
+                        <geom mesh="caster_wheel" material="Pure_Black" class="collision"/>
                     </body> <!-- caster_wheel -->
 
                 </body> <!-- caster_wheel_support -->
@@ -63,21 +78,21 @@
 
             <body name="rplidar-al" pos="0.05 0 0.08" >
                 <inertial pos="0 0 0" mass="0.1" diaginertia="6.45e-06 6.45e-06 1.12e-05"/>
-                <geom quat="-1 0 0 0" type="mesh" rgba="0.3 0.3 0.3 1" mesh="rplidar-a1"/>
+                <geom mesh="rplidar-a1" quat="-1 0 0 0" material="Plastic_Grey" class="collision"/>
             </body><!-- rplidar-al -->
 
             <body name="motor_right" pos="0.0015 -0.03775 -0.017">
-                <inertial pos="0 0 0" quat="0 -1 0 0" mass="0.35" diaginertia="7.16e-06 4.37e-05 4.50e-05"/>
-                <geom quat="0 -1 0 0" type="mesh" contype="1" conaffinity="1" group="1" rgba="0 0.5 0.8 1" mesh="motor"/>
+                <inertial pos="0 0 0" mass="0.35" diaginertia="7.16e-06 4.37e-05 4.50e-05"/>
+                <geom mesh="motor" material="Light_Blue" class="collision"/>
             </body><!-- motor_right -->
 
             <body name="motor_left" pos="0.0015 0.03775 -0.017">
                 <inertial pos="0 0 0" euler="0 0 0" mass="0.35" diaginertia="7.16e-06 4.375e-05 4.50e-05"/>
-                <geom type="mesh" contype="1" conaffinity="1" group="1"  rgba="0 0.5 0.8 1" mesh="motor"/>
+                <geom mesh="motor" material="Light_Blue" class="collision"/>
             </body> <!-- motor_left-->
 
             <body name="camera_mount" pos="0.085 0 0.025">
-                <geom type="mesh" contype="1" conaffinity="1" group="1" rgba="0 0 1 1" mesh="camera_mount"/>
+                <geom mesh="camera_mount" material="3D_Print_Blue" class="collision"/>
                 <camera name="andino_cam" mode="fixed" xyaxes="0 -1 0 0 0 1" pos="-0.1 0 0.09 "/>
             </body> <!-- camera_mount -->
 
