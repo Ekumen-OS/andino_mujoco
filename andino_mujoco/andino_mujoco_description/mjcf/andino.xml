@@ -40,7 +40,7 @@
     </default>
 
     <worldbody>
-        <body name="chassis" pos="0.0 0.0 0.0" quat="0.707 0 0 -0.707">
+        <body name="chassis" quat="0.707 0 0 -0.707">
             <joint type="free"/>
             <inertial pos="0 0 -0.02" mass="0.5" diaginertia="0.0009 0.0009 0.0016"/>
             <geom mesh="chassis" material="3D_Print_Blue" class="collision" />
@@ -68,7 +68,7 @@
 
                 <body name="caster_wheel_support" pos="-0.001 0 0" >
                     <inertial pos="0 0 0" mass="0.1" diaginertia="5.33e-06 5.33e-06 5.33e-06"/>
-                    <joint name="caster_base_to_caster_wheel_support" pos="0 0 0" type="hinge" axis="0 0 1" damping="0.001"/>
+                    <joint name="caster_base_to_caster_wheel_support" type="hinge" axis="0 0 1" damping="0.001"/>
                     <geom mesh="caster_wheel_support" material="Aluminum" class="collision"/>
 
                     <body name="caster_wheel" pos="-0.015 0.0 -0.02">
@@ -91,7 +91,7 @@
             </body><!-- motor_right -->
 
             <body name="motor_left" pos="0.0015 0.03775 -0.017">
-                <inertial pos="0 0 0" euler="0 0 0" mass="0.35" diaginertia="7.16e-06 4.375e-05 4.50e-05"/>
+                <inertial pos="0 0 0" mass="0.35" diaginertia="7.16e-06 4.375e-05 4.50e-05"/>
                 <geom mesh="motor" material="Light_Blue" class="collision"/>
             </body> <!-- motor_left-->
 
