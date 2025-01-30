@@ -65,9 +65,10 @@
 
                 <body name="caster_wheel_support" pos="-0.001 0 0" >
                     <inertial pos="0 0 0" mass="0.1" diaginertia="5.33e-06 5.33e-06 5.33e-06"/>
+                    <joint name="caster_base_to_caster_wheel_support" pos="0 0 0" type="hinge" axis="0 0 1" damping="0.001"/>
                     <geom mesh="caster_wheel_support" material="Aluminum" class="collision"/>
 
-                    <body name="caster_wheel" pos="-0.023 0 -0.02" >
+                    <body name="caster_wheel" pos="-0.015 0.0 -0.02">
                         <joint name="caster_wheel_support_to_caster_wheel" pos="0 0 0" type="hinge" axis="0 1 0" damping="0.001" />
                         <geom mesh="caster_wheel" material="Pure_Black" class="collision"/>
                     </body> <!-- caster_wheel -->
