@@ -100,7 +100,7 @@
 
             <body name="camera_mount" pos="0.085 0 0.025">
                 <geom mesh="camera_mount" material="3D_Print_Blue" class="collision"/>
-                <camera name="andino_cam" mode="fixed" xyaxes="0 -1 0 0 0 1" pos="-0.1 0 0.09 "/>
+                <camera name="andino_cam" mode="fixed" xyaxes="0 -1 0 0 0 1"/>
             </body> <!-- camera_mount -->
 
         </body><!-- chassis -->
