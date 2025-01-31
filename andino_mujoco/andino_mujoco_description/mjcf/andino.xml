@@ -47,7 +47,7 @@
     </default>
 
     <worldbody>
-        <body name="chassis" quat="0.707 0 0 -0.707">
+        <body name="chassis" pos="0 0 0.0514192" quat="0.999957 0 -0.00926022 0">
             <joint type="free"/>
             <inertial pos="0 0 -0.02" mass="0.5" diaginertia="0.0009 0.0009 0.0016"/>
             <geom mesh="chassis" material="3D_Print_Blue" class="collision"/>
@@ -69,11 +69,11 @@
                 <geom class="rubber_wheel_collision"/>
             </body><!-- left_wheel -->
 
-            <body name="caster_base" pos="-0.076 0 -0.0155" >
-                <inertial pos="0 0 0" euler="0 0 0" mass="0.02" diaginertia="5.33e-06 5.33e-06 5.33e-06"/>
+            <body name="caster_base" pos="-0.076 0 -0.0155">
+                <inertial pos="0 0 0" mass="0.02" diaginertia="5.33e-06 5.33e-06 5.33e-06"/>
                 <geom mesh="caster_base" material="Aluminum" class="collision"/>
 
-                <body name="caster_wheel_support" pos="-0.001 0 0" >
+                <body name="caster_wheel_support">
                     <inertial pos="0 0 0" mass="0.1" diaginertia="5.33e-06 5.33e-06 5.33e-06"/>
                     <joint name="caster_base_to_caster_wheel_support" class="caster_wheel_support"/>
                     <geom mesh="caster_wheel_support" material="Aluminum" class="collision"/>
@@ -84,11 +84,11 @@
                         <geom class="caster_wheel_collision"/>
                     </body> <!-- caster_wheel -->
 
-                </body> <!-- caster_wheel_support -->
+                </body><!-- caster_wheel_support -->
 
-            </body> <!-- caster_base -->
+            </body><!-- caster_base -->
 
-            <body name="rplidar-al" pos="0.05 0 0.08" >
+            <body name="rplidar-al" pos="0.05 0 0.08">
                 <inertial pos="0 0 0" mass="0.1" diaginertia="6.45e-06 6.45e-06 1.12e-05"/>
                 <geom mesh="rplidar-a1" quat="-1 0 0 0" material="Plastic_Grey" class="collision"/>
             </body><!-- rplidar-al -->
@@ -101,12 +101,12 @@
             <body name="motor_left" pos="0.0015 0.03775 -0.017">
                 <inertial pos="0 0 0" mass="0.35" diaginertia="7.16e-06 4.375e-05 4.50e-05"/>
                 <geom mesh="motor" material="Light_Blue" class="collision"/>
-            </body> <!-- motor_left-->
+            </body><!-- motor_left-->
 
             <body name="camera_mount" pos="0.085 0 0.025">
                 <geom mesh="camera_mount" material="3D_Print_Blue" class="collision"/>
                 <camera name="andino_cam" mode="fixed" xyaxes="0 -1 0 0 0 1"/>
-            </body> <!-- camera_mount -->
+            </body><!-- camera_mount -->
 
         </body><!-- chassis -->
 
