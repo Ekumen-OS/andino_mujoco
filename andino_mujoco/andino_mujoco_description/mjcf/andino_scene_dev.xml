@@ -1,0 +1,11 @@
+<mujoco model="andino_workshop_dev">
+  <option integrator="implicitfast" timestep="0.001" cone="elliptic" impratio="10"/>
+  <include file="andino.xml"/>
+  <include file="include/dev_world.xml"/>
+  <worldbody>
+    <light diffuse="1 1 1" pos="0 0 6" dir="0 0 -1"/>
+    <light diffuse="0.6 0.6 0.6" pos="3 3 4" dir="-1 -1 -1"/>
+    <geom name="ground_plane" type="plane" size="10 10 0.1"
+          friction="1.0" contype="1" conaffinity="1" rgba="0.6 0.7 0.8 1"/>
+  </worldbody>
+</mujoco>
