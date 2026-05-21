@@ -49,14 +49,14 @@
                 <joint name="right_wheel_joint" type="hinge" axis="0 1 0"
                        damping="0.1" armature="0.01"/>
                 <geom class="visual" quat="0 0 -0.707107 -0.707107" type="mesh"  mesh="wheel"/>
-                <geom quat="1 1 0 0" type="cylinder" mass="0.03" size="0.03 0.010" />
+                <geom quat="1 1 0 0" type="cylinder" mass="0.03" size="0.03 0.010" friction="4.0 0.005 0.0001" />
             </body><!-- right_wheel -->
 
             <body name="left_wheel" pos="0.0185 0.0675 -0.017">
                 <joint name="left_wheel_joint" type="hinge" axis="0 1 0"
                        damping="0.1" armature="0.01"/>
                 <geom class="visual" quat="0.707107 0.707107 0 0" type="mesh" mesh="wheel"/>
-                <geom quat="1 1 0 0" type="cylinder" mass="0.03" size="0.03 0.010" />
+                <geom quat="1 1 0 0" type="cylinder" mass="0.03" size="0.03 0.010" friction="4.0 0.005 0.0001" />
             </body><!-- left_wheel -->
 
             <body name="caster_base" pos="-0.076 0 -0.0155" >
