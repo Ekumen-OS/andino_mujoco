@@ -5,6 +5,7 @@ x-common-config: &common-config
     - QT_X11_NO_MITSHM=1
     - XAUTHORITY=/tmp/.docker.xauth
   tty: true
+  stdin_open: true
   network_mode: host
   stop_grace_period: 5s
   volumes:

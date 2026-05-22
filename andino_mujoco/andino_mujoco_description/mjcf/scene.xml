@@ -1,5 +1,5 @@
 <mujoco model="Andino">
-    <option integrator="implicitfast"/>
+    <option integrator="implicitfast" timestep="0.001" cone="elliptic" impratio="10"/>
 
     <include file="andino.xml"/>
     <include file="include/table.xml"/>
@@ -10,7 +10,7 @@
         <light diffuse="1 1 1" pos = "0 4 0" dir="0 -1 0"></light>
         <light diffuse="1 1 1" pos = "4 0 0" dir="-1 0 0"></light>
 
-        <geom name="ground_plane" type="plane" size="10 17 0.1" friction=".1" contype="1" conaffinity="1" rgba="0 .5 .8 1"/>
+        <geom name="ground_plane" type="plane" size="10 17 0.1" friction="1.0" contype="1" conaffinity="1" rgba="0 .5 .8 1"/>
     </worldbody>
 
 </mujoco>

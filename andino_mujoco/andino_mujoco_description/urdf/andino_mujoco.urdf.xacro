@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="andino_mujoco">
+
+  <xacro:arg name="mujoco_model_path" default=""/>
+  <xacro:arg name="headless" default="false"/>
+
+  <xacro:arg name="use_real_ros_control" default="false"/>
+  <xacro:include filename="$(find andino_description)/urdf/andino.urdf.xacro"/>
+
+  <ros2_control name="MujocoSystem" type="system">
+    <hardware>
+      <plugin>mujoco_ros2_control/MujocoSystemInterface</plugin>
+      <param name="mujoco_model">$(arg mujoco_model_path)</param>
+      <param name="headless">$(arg headless)</param>
+      <param name="lidar_publish_rate">10.0</param>
+      <param name="sim_speed_factor">1.0</param>
+    </hardware>
+
+    <joint name="left_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-5.0</param>
+        <param name="max">5.0</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="right_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-5.0</param>
+        <param name="max">5.0</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <sensor name="lidar">
+      <param name="frame_name">rplidar_laser_link</param>
+      <param name="topic">/scan</param>
+      <param name="min_angle">-3.14159265</param>
+      <param name="max_angle">3.12413936</param>
+      <param name="angle_increment">0.01745329</param>
+      <param name="range_min">0.15</param>
+      <param name="range_max">12.0</param>
+    </sensor>
+  </ros2_control>
+
+</robot>

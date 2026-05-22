@@ -171,7 +171,7 @@ Press "p" to quit
     linear_direction = Value("d", 0.0)
     angular_direction = Value("d", 0.0)
     linear_speed = Value("d", 20.0)
-    angular_speed = Value("d", 20.0)
+    angular_speed = Value("d", 5.0)
     acceleration = Value("d", 0.05)
     keep_running = Value("b", True)
 
