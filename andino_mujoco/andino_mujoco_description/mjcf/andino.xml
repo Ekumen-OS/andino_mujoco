@@ -20,10 +20,6 @@
     </asset>
 
     <worldbody>
-        <!-- Chassis meshes are authored with mesh-+y as forward, so this quat aligns
-             the chassis-local +x (robot forward, per the wheel/lidar/camera placements below)
-             with the mesh's intrinsic forward direction. Initial z=0.05 keeps wheel cylinders
-             above the ground plane on spawn; the free joint settles to ~0.047. -->
         <body name="chassis" pos="0.0 0.0 0.05" quat="0.707 0 0 -0.707">
             <site name="chassis"/>
             <joint name="base_free_joint" type="free"/>
@@ -35,28 +31,19 @@
                 <geom type="mesh" rgba="0 0 1 1" mesh="chassis_top"/>
             </body><!-- chassis_top -->
 
-            <!-- armature + damping give the wheel joint enough effective
-                 inertia for the velocity actuator to track command. friction
-                 tuple sliding=4.0 is well above 1.5: under kv=10 the velocity
-                 actuator's transient torque at the wheel contact can demand
-                 hundreds of N (kv*Δω/r), saturating MuJoCo's pyramidal
-                 friction cone at the wheel-floor patch, producing ~28% rotation
-                 slip vs pure kinematic control. Higher μ raises the
-                 saturation limit. Torsional/rolling components stay set for
-                 documentation; condim=3 (the MuJoCo default) ignores them. -->
             <body name="right_wheel" pos="0.0185 -0.0675 -0.017">
                 <site name="right_wheel"/>
                 <joint name="right_wheel_joint" type="hinge" axis="0 1 0"
                        damping="0.1" armature="0.01"/>
                 <geom class="visual" quat="0 0 -0.707107 -0.707107" type="mesh"  mesh="wheel"/>
-                <geom quat="1 1 0 0" type="cylinder" mass="0.03" size="0.03 0.010" friction="4.0 0.005 0.0001" />
+                <geom quat="1 1 0 0" type="cylinder" mass="0.03" size="0.03 0.010" friction="20.0 0.005 0.0001" />
             </body><!-- right_wheel -->
 
             <body name="left_wheel" pos="0.0185 0.0675 -0.017">
                 <joint name="left_wheel_joint" type="hinge" axis="0 1 0"
                        damping="0.1" armature="0.01"/>
                 <geom class="visual" quat="0.707107 0.707107 0 0" type="mesh" mesh="wheel"/>
-                <geom quat="1 1 0 0" type="cylinder" mass="0.03" size="0.03 0.010" friction="4.0 0.005 0.0001" />
+                <geom quat="1 1 0 0" type="cylinder" mass="0.03" size="0.03 0.010" friction="20.0 0.005 0.0001" />
             </body><!-- left_wheel -->
 
             <body name="caster_base" pos="-0.076 0 -0.0155" >
@@ -69,11 +56,7 @@
 
                     <body name="caster_wheel" pos="-0.023 0 -0.02" >
                         <joint name="caster_wheel_support_to_caster_wheel" pos="0 0 0" type="hinge" axis="0 1 0" damping="0.001" />
-                        <!-- Visual only — no contact so it can't scrub during rotation. -->
                         <geom type="mesh" rgba="0 0 0 1" mesh="caster_wheel" contype="0" conaffinity="0" group="2"/>
-                        <!-- Sphere collision mirrors the URDF caster (radius 0.010747 m). A sphere
-                             rolls in any direction, so it contributes zero lateral force during
-                             in-place chassis rotation — eliminating the ~30 % angular odom error. -->
                         <geom type="sphere" size="0.010747" rgba="0 0 0 0" contype="1" conaffinity="1"/>
                     </body> <!-- caster_wheel -->
 
@@ -81,11 +64,6 @@
 
             </body> <!-- caster_base -->
 
-            <!-- rplidar-al stays in upstream chassis-local pose: pos="0.05 0 0.08",
-                 no body quat. Lidar-local frame = chassis-local frame; ray-001 along
-                 chassis-local +x (robot forward). Sites sweep CCW about +z. URDF/MJCF
-                 alignment for /scan is handled by robot_state_publisher's TF tree from
-                 the URDF, not by matching positions here. -->
             <body name="rplidar-al" pos="0.05 0 0.08">
                 <inertial pos="0 0 0" mass="0.1" diaginertia="6.45e-06 6.45e-06 1.12e-05"/>
                 <geom quat="-1 0 0 0" type="mesh" rgba="0.3 0.3 0.3 1" mesh="rplidar-a1"/>
