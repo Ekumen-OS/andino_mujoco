@@ -92,14 +92,21 @@ def simulation(
     """Run the Andino simulation."""
     import mujoco
     import mujoco.viewer
+    import time
+
+    simulation_timestep = 1e-3  # 1ms
+    viewer_update_period = 1 / 60  # 60fps
 
     # Specify the path to the XML model
     model_path = "/models/andino_mujoco_description/mjcf/scene.xml"
     model = mujoco.MjModel.from_xml_path(model_path)
-    model.opt.timestep = 1e-3  # 1ms
+    model.opt.timestep = simulation_timestep
     data = mujoco.MjData(model)
 
     with mujoco.viewer.launch_passive(model, data) as viewer:
+
+        last_viewer_update = time.perf_counter()
+        last_physics_update = time.perf_counter()
 
         while viewer.is_running() and keep_running.value:
             # Calculate the control actions
@@ -142,7 +149,20 @@ def simulation(
 
             # Advance the simulation
             mujoco.mj_step(model, data)
-            viewer.sync()
+
+            # MuJoCo may go faster than real time, so we need to add a delay.
+            # Normally the physics and visualizer updates happen in different
+            # threads, but as the time delta for the physics update is small,
+            # we use one thread for simplicity.
+            physics_update_delta = time.perf_counter() - last_physics_update
+            if physics_update_delta < 1e-3:
+                time.sleep(1e-3 - physics_update_delta)
+            last_physics_update = time.perf_counter()
+
+            # Update the viewer
+            if time.perf_counter() - last_viewer_update >= viewer_update_period:
+                viewer.sync()
+                last_viewer_update = time.perf_counter()
 
         # To stop the input handler thread
         keep_running.value = False
